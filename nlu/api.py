@@ -12,6 +12,7 @@ from lib.model import IntentClassifier
 from lib.model import EntityExtractor
 from lib.tokenizer import KuromojiTokenizer
 from lib.semantic_search import SemanticSearch
+from lib.model import IntentClassifier
 
 """
 Sample json request data:
@@ -89,6 +90,14 @@ def semantic_search():
             {'error': str(e), 'trace': traceback.format_exc()}
             )
 
+#@app.route('/data/train', methods=['POST'])
+#def train():
+#    intent_classifier = IntentClassifier(tokenizer=tokenizer)
+#    intent_classifier.load_data(path=args.data_path)
+#    intent_classifier.train(max_iter=args.iterations)
+#    intent_classifier.save_model(path=args.model_path)
+
+
 try:
     port = int(sys.argv[1])
 except Exception as e:
@@ -99,8 +108,8 @@ try:
     # ja_intent_model.load_model("models/en_intent_model.pkl")
     # app.logger.info('Model loaded: models/ja_intent_model.pkl')
     en_intent_model = IntentClassifier(tokenizer=None)
-    en_intent_model.load_model("models/en_intent_model.pkl")
-    app.logger.info('Model loaded: models/en_intent_model.pkl')
+    en_intent_model.load_model("models/demo_intent_model.pkl")
+    app.logger.info('Model loaded: models/demo_intent_model.pkl')
     en_entity_model = EntityExtractor()
     en_entity_model.load_model()
     app.logger.info('Loaded spacy pre-trained entity model')

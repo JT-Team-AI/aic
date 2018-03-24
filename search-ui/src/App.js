@@ -49,7 +49,7 @@ const App = ({ intent, entity, results }) => (
       <div className="app-searchanalyze">
         <div className="app-intent panel col-md-6">
           <div className="panel-heading">
-            <h3 class="panel-title">Your intent</h3>
+            <h3 class="panel-title">Top intent</h3>
           </div>
           <div className="panel-body">
             <div className="app-intent-label">{intent.top_intent}</div>
@@ -58,7 +58,7 @@ const App = ({ intent, entity, results }) => (
         </div>
         <div className="app-entity panel col-md-6">
           <div className="panel-heading">
-            <h3 class="panel-title">Your intent</h3>
+            <h3 class="panel-title">Entities</h3>
           </div>
           <div className="panel-body">
             {

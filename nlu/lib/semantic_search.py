@@ -1,3 +1,15 @@
+import pdb
+import re
+
+def find_numbers(string, ints=True):
+    numexp = re.compile(r'[-]?\d[\d,]*[\.]?[\d{2}]*') #optional - in front
+    numbers = numexp.findall(string)    
+    numbers = [x.replace(',','') for x in numbers]
+    if ints is True:
+        return [int(x.replace(',','').split('.')[0]) for x in numbers]
+    else:
+        return numbers
+
 class SemanticSearch(object):
     
     # TODO: receive new set of search criteria from browser on every call of update_search_criteria instead of using stored value
@@ -59,17 +71,17 @@ class SemanticSearch(object):
         
         intent_class = intent['top_intent']
         intent_score = intent['score']
-        
+
         if len(entities)>0 and entities[0]['type']=='MONEY':
-        
+
             if intent_class=="set_maximum_price":
-                search_criteria['filter']['budget_more'] = int(entities[0][name])
+                search_criteria['filter']['budget_less'] = find_numbers(entities[0]['name'])[0]
 
             elif intent_class=="set_minimum_price":
-                search_criteria['filter']['budget_less'] = int(entities[0][name])
-        
+                search_criteria['filter']['budget_more'] = find_numbers(entities[0]['name'])[0]
+
         # Modify search_criteria based
         # ...
-        
+
         self.current_criteria = search_criteria
         return search_criteria
