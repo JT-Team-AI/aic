@@ -2,6 +2,7 @@
 from logging import getLogger
 from sklearn import metrics
 from sklearn import neural_network
+import spacy
 
 from lib.utils import read_json
 
@@ -73,7 +74,7 @@ class IntentClassifier(object):
         self.count_vectorizer = CountVectorizer(tokenizer=self.tokenizer,
                                                 vocabulary=self.vocabulary)
 
-    def evaluate(self, test_size=0.2, max_iter=200):
+    def evaluate(self, test_size=0.2, max_iter=200, threshold=0.5):
 
         self.test_vectorizer = TfidfVectorizer(tokenizer=self.tokenizer)
         self.test_model = neural_network.MLPClassifier(max_iter=max_iter)
@@ -118,3 +119,61 @@ class IntentClassifier(object):
             'score': score
         }
         return result
+    
+class EntityExtractor(object):
+    
+    """
+    to get model, run: python -m spacy download en_core_web_md
+    """
+
+    """
+    PERSON        People, including fictional.
+    NORP          Nationalities or religious or political groups.
+    FACILITY      Buildings, airports, highways, bridges, etc.
+    ORG           Companies, agencies, institutions, etc.
+    GPE           Countries, cities, states.
+    LOC           Non-GPE locations, mountain ranges, bodies of water.
+    PRODUCT       Objects, vehicles, foods, etc. (Not services.)
+    EVENT         Named hurricanes, battles, wars, sports events, etc.
+    WORK_OF_ART   Titles of books, songs, etc.
+    LAW           Named documents made into laws.
+    LANGUAGE      Any named language.
+    DATE          Absolute or relative dates or periods.
+    TIME          Times smaller than a day.
+    PERCENT       Percentage, including "%".
+    MONEY         Monetary values, including unit.
+    QUANTITY      Measurements, as of weight or distance.
+    ORDINAL       "first", "second", etc.
+    CARDINAL      Numerals that do not fall under another type.
+    """
+    
+    def __init__(self, tokenizer=None):
+
+        self.tokenizer = tokenizer
+        
+    def load_data(self, path="data/testData.json"):
+        raise NotImplementedError
+
+    def train(self):
+        raise NotImplementedError
+
+    def save_model(self, path=None):
+        raise NotImplementedError
+
+    def load_model(self, path=None):
+        self.model = spacy.load('en_core_web_md')
+        
+    def infer(self, query):
+        doc = self.model(query)
+
+        results = []
+        for ent in doc.ents:
+            result = {
+                "name": str(ent.text),
+                "start": str(ent.start_char),
+                "end": str(ent.end_char),
+                "type": str(ent.label_)
+            }
+            results.append(result)
+        return results
+

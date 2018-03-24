@@ -9,6 +9,7 @@ from flask import jsonify
 from flask import request
 
 from lib.model import IntentClassifier
+from lib.model import EntityExtractor
 from lib.tokenizer import KuromojiTokenizer
 
 
@@ -45,10 +46,30 @@ def get_intent():
         language = json_["language"]
 
         if language == "en":
-            prediction = en_model.infer([query])
+            prediction = en_intent_model.infer([query])
 
         elif language == "ja":
-            prediction = ja_model.infer([query])
+            prediction = ja_intent_model.infer([query])
+
+        return jsonify(prediction)
+
+    except Exception as e:
+        return 'Error' if is_production else jsonify(
+            {'error': str(e), 'trace': traceback.format_exc()}
+            )
+
+@app.route('/entity', methods=['POST'])
+def get_entity():
+    try:
+        json_ = request.get_json()
+        query = json_["text"]
+        language = json_["language"]
+
+        if language == "en":
+            prediction = en_entity_model.infer(query)
+
+        elif language == "ja":
+            prediction = []
 
         return jsonify(prediction)
 
@@ -64,12 +85,15 @@ except Exception as e:
     port = 5000
 
 try:
-    ja_model = IntentClassifier(tokenizer=KuromojiTokenizer().tokenize)
-    ja_model.load_model("models/en_intent_model.pkl")
+    ja_intent_model = IntentClassifier(tokenizer=KuromojiTokenizer().tokenize)
+    ja_intent_model.load_model("models/en_intent_model.pkl")
     app.logger.info('Model loaded: models/ja_intent_model.pkl')
-    en_model = IntentClassifier(tokenizer=None)
-    en_model.load_model("models/en_intent_model.pkl")
+    en_intent_model = IntentClassifier(tokenizer=None)
+    en_intent_model.load_model("models/en_intent_model.pkl")
     app.logger.info('Model loaded: models/en_intent_model.pkl')
+    en_entity_model = EntityExtractor()
+    en_entity_model.load_model()
+    app.logger.info('Loaded spacy pre-trained entity model')
 
 
 except Exception as e:
