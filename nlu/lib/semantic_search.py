@@ -3,8 +3,9 @@ class SemanticSearch(object):
     # TODO: receive new set of search criteria from browser on every call of update_search_criteria instead of using stored value
     
     """
-    sample_nlu_input = {
+    default_nlu_input = {
         'text': "sample text",
+        'language': "en",
         'intent': {
             'intent',
             'score'
@@ -50,6 +51,7 @@ class SemanticSearch(object):
     
     def update_search_criteria(self, nlu_data):
         text = nlu_data['text']
+        language = nlu_data['language']
         intents = nlu_data['intent']
         entities = nlu_data['entities']
         

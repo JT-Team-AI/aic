@@ -77,7 +77,18 @@ def get_entity():
         return 'Error' if is_production else jsonify(
             {'error': str(e), 'trace': traceback.format_exc()}
             )
+    
+@app.route('data/semantic', methods=['POST'])
+def semantic_search():
+    try:
+        json_ = request.get_json()
+        new_criteria = semantic_search.update_search_criteria(json_)
+        return jsonify(prediction)
 
+    except Exception as e:
+        return 'Error' if is_production else jsonify(
+            {'error': str(e), 'trace': traceback.format_exc()}
+            )
 
 try:
     port = int(sys.argv[1])
@@ -94,6 +105,8 @@ try:
     en_entity_model = EntityExtractor()
     en_entity_model.load_model()
     app.logger.info('Loaded spacy pre-trained entity model')
+    semantic_search = SemanticSearch()
+    app.logger.info('Loaded semantic search model')
 
 
 except Exception as e:
