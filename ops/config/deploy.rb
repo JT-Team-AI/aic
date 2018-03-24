@@ -17,10 +17,11 @@ set :log_level, :debug
 set :format, :airbrussh
 set :format_options, command_output: true, log_file: 'log/capistrano.log', color: :auto, truncate: :auto
 set :pty, true
-append :linked_dirs, 'log', 'tmp', 'venv_data-science'
+append :linked_dirs, 'log', 'tmp', 'search-ui/node_modules', 'rasa-nlu-trainer/node_modules', 'venv_data-science'
 set :keep_releases, 5
 set :keep_assets, 5
 set :api_dir, 'api-dummy'
 
 after 'deploy:updated', 'data_science:bundle'
 after 'deploy:publishing', 'gunicorn:restart'
+after 'deploy:publishing', 'search_ui:build'
