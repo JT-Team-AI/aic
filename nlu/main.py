@@ -21,7 +21,7 @@ group.add_argument("--intent", action="store_true")
 group.add_argument("--entity", action="store_true")
 
 # Model arguments
-parser.add_argument('--model_path', type=str, default="./models/model.pkl", help='Output path for trained model')
+parser.add_argument('--model_path', type=str, default="./models/en_intent_model.pkl", help='Output path for trained model')
 parser.add_argument('--data_path', type=str, default="data/testData.json", help='Path to processed dataset for training')
 parser.add_argument('--tokenizer', type=str, default="en", help='Language of training data, en or ja')
 parser.add_argument('--split_ratio', type=float, default=0.8, help='Ratio of training data for evaluation')

@@ -52,10 +52,21 @@ class SemanticSearch(object):
     def update_search_criteria(self, nlu_data):
         text = nlu_data['text']
         language = nlu_data['language']
-        intents = nlu_data['intent']
+        intent = nlu_data['intent']
         entities = nlu_data['entities']
         
         search_criteria = self.current_criteria
+        
+        intent_class = intent['intent']
+        intent_score = intent['score']
+        
+        if len(entities)>0 and entities[0]['type']=='MONEY':
+        
+            if intent_class=="set_maximum_price":
+                search_criteria['filter']['budget_more'] = int(entities[0][name])
+
+            elif intent_class=="set_minimum_price":
+                search_criteria['filter']['budget_less'] = int(entities[0][name])
         
         # Modify search_criteria based
         # ...
