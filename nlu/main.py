@@ -15,10 +15,11 @@ logger = getLogger(__name__)
 parser = argparse.ArgumentParser()
 
 group = parser.add_mutually_exclusive_group()
-group.add_argument("--train", action="store_true")
-group.add_argument("--evaluate", action="store_true")
-group.add_argument("--intent", action="store_true")
-group.add_argument("--entity", action="store_true")
+group.add_argument("--train_intent", action="store_true")
+group.add_argument("--evaluate_intent", action="store_true")
+group.add_argument("--get_intent", action="store_true")
+group.add_argument("--train_entity", action="store_true")
+group.add_argument("--get_entity", action="store_true")
 
 # Model arguments
 parser.add_argument('--model_path', type=str, default="./models/en_intent_model.pkl", help='Output path for trained model')
@@ -36,18 +37,18 @@ if args.tokenizer == "ja":
 elif args.tokenizer == "en":
     tokenizer = None
 
-if args.train:
+if args.train_intent:
     intent_classifier = IntentClassifier(tokenizer=tokenizer)
     intent_classifier.load_data(path=args.data_path)
     intent_classifier.train(max_iter=args.iterations)
     intent_classifier.save_model(path=args.model_path)
 
-elif args.evaluate:
+elif args.evaluate_intent:
     intent_classifier = IntentClassifier(tokenizer=tokenizer)
     intent_classifier.load_data(path=args.data_path)
     intent_classifier.evaluate(test_size=(1-args.split_ratio), max_iter=args.iterations)
 
-elif args.intent:
+elif args.get_intent:
     intent_classifier = IntentClassifier(tokenizer=tokenizer)
     intent_classifier.load_model(args.model_path)
 
@@ -60,7 +61,7 @@ elif args.intent:
     predictions = intent_classifier.infer([q])
     logger.info("Predicted intent: %s", predictions)
 
-elif args.entity:
+elif args.get_entity:
     entity_extractor = EntityExtractor()
     entity_extractor.load_model()
 
@@ -72,6 +73,12 @@ elif args.entity:
 
     predictions = entity_extractor.infer(q)
     logger.info("Extracted entities: %s", predictions)
+
+elif args.train_entity:
+    entity_extractor = EntityExtractor()
+    entity_extractor.load_data(path=args.data_path)
+    entity_extractor.train(max_iter=args.iterations)
+    entity_extractor.save_model(path=args.model_path)
 
 else:
     logger.warn("No mode specified")
