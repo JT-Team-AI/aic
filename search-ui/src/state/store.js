@@ -1,7 +1,7 @@
 import { List } from 'immutable';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
-import { searchEpic, intentEpic, entityEpic } from './actions';
+import { searchEpic, intentEpic, entityEpic, semanticEpic } from './actions';
 import reducer from './reducer';
 import rasaReducer from './../rasa/state/reducer';
 import thunk from 'redux-thunk'
@@ -19,7 +19,8 @@ const store = createStore(
     search: {
       results: List(),
       intent: {},
-      entity: [],
+      semantic: {},
+      entity: List(),
     },
     rasa: {
       examples: [],
@@ -29,8 +30,7 @@ const store = createStore(
     },
   },
   applyMiddleware(
-    createEpicMiddleware(combineEpics(entityEpic, searchEpic)),
-    createEpicMiddleware(combineEpics(intentEpic)),
+    createEpicMiddleware(combineEpics(intentEpic, entityEpic, semanticEpic, searchEpic)),
     thunk,
     routerMiddleware(history),
   ),

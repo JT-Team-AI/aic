@@ -2,7 +2,7 @@ import { List } from 'immutable';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Observable } from 'rxjs/Observable';
-import { intent, entity } from './state/actions';
+import { intent } from './state/actions';
 
 class SearchInput extends React.Component {
   render() {
@@ -39,7 +39,6 @@ class SearchInput extends React.Component {
 const mapDispatch = (dispatch) => ({
   onChange: (text) => {
     dispatch(intent(text));
-    dispatch(entity(text));
   },
 });
 

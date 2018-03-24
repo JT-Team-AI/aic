@@ -10,6 +10,7 @@ import './App.css';
 const mapState = (state) => ({
   intent: state.search.intent,
   entity: state.search.entity,
+  semantic: state.search.semantic,
   results: state.search.results,
 })
 

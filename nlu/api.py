@@ -11,7 +11,7 @@ from flask import request
 from lib.model import IntentClassifier
 from lib.model import EntityExtractor
 from lib.tokenizer import KuromojiTokenizer
-
+from lib.semantic_search import SemanticSearch
 
 """
 Sample json request data:
@@ -29,7 +29,6 @@ curl -i -H "Content-Type: application/json" -X POST -d "{\"title\": \"kyoto\", \
 """
 
 app = Flask(__name__)
-
 
 @app.route('/data/search', methods=['POST'])
 def search():
@@ -83,7 +82,7 @@ def semantic_search():
     try:
         json_ = request.get_json()
         new_criteria = semantic_search.update_search_criteria(json_)
-        return jsonify(prediction)
+        return jsonify(new_criteria)
 
     except Exception as e:
         return 'Error' if is_production else jsonify(
@@ -96,9 +95,9 @@ except Exception as e:
     port = 5000
 
 try:
-    ja_intent_model = IntentClassifier(tokenizer=KuromojiTokenizer().tokenize)
-    ja_intent_model.load_model("models/en_intent_model.pkl")
-    app.logger.info('Model loaded: models/ja_intent_model.pkl')
+    # ja_intent_model = IntentClassifier(tokenizer=KuromojiTokenizer().tokenize)
+    # ja_intent_model.load_model("models/en_intent_model.pkl")
+    # app.logger.info('Model loaded: models/ja_intent_model.pkl')
     en_intent_model = IntentClassifier(tokenizer=None)
     en_intent_model.load_model("models/en_intent_model.pkl")
     app.logger.info('Model loaded: models/en_intent_model.pkl')

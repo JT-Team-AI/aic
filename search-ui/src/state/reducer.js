@@ -5,6 +5,7 @@ import {
   RECEIVED_SEARCH_RESULT,
   RECEIVED_INTENT_RESULT,
   RECEIVED_ENTITY_RESULT,
+  RECEIVED_SEMANTIC_RESULT,
 } from './actions'
 
 export default function reducer (state: Object = {}, action: Object): Object {
@@ -27,6 +28,11 @@ export default function reducer (state: Object = {}, action: Object): Object {
       return {
         ...state,
         entity: action.results,
+      };
+    case RECEIVED_SEMANTIC_RESULT:
+      return {
+        ...state,
+        semantic: action.results,
       };
     default:
       return state
