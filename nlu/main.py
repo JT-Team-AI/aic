@@ -1,8 +1,8 @@
 # from lib.utils import tinysegmenter_tokenize
-import lib.app_init  # noqa: F401
+import lib.app_init
+
 from lib.model import IntentClassifier
 from lib.tokenizer import KuromojiTokenizer
-from lib.utils import preprocess
 from logging import getLogger
 
 import argparse
@@ -20,9 +20,8 @@ group.add_argument("--infer", action="store_true")
 
 # Model arguments
 parser.add_argument('--model_path', type=str, default="./models/model.pkl", help='Output path for trained model')
-parser.add_argument('--data_path', type=str, default="en_data.json", help='Path to processed dataset for training')
+parser.add_argument('--data_path', type=str, default="data/testData.json", help='Path to processed dataset for training')
 parser.add_argument('--tokenizer', type=str, default="en", help='Language of training data, en or ja')
-parser.add_argument('--threshold', type=float, default=0.5, help='Confidence threshold for prediction')
 parser.add_argument('--split_ratio', type=float, default=0.8, help='Ratio of training data for evaluation')
 parser.add_argument('--iterations', type=int, default=200, help='Maximum iterations for MLP training')
 parser.add_argument('--query', type=str, default="", help='Text to infer tags from')
@@ -46,21 +45,19 @@ if args.train:
 elif args.evaluate:
     predictor.load_data(path=args.data_path)
     predictor.evaluate(test_size=(1-args.split_ratio),
-                       max_iter=args.iterations,
-                       report_path=args.report_path,
-                       threshold=args.threshold)
+                       max_iter=args.iterations)
 
 elif args.infer:
     predictor.load_model(args.model_path)
 
     if args.query_type == "JSON":
         dictionary = json.loads(args.query)
-        q = dictionary['title'] + "\n" + dictionary['description']
+        q = dictionary['text']
     else:
         q = args.query
 
-    predictions = predictor.infer([q], args.threshold)
-    logger.info("Predicted tags are: %s", predictions)
+    predictions = predictor.infer([q])
+    logger.info("Predicted intent: %s", predictions)
 
 else:
     logger.warn("No mode specified")

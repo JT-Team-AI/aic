@@ -7,7 +7,6 @@ import traceback
 from flask import Flask
 from flask import jsonify
 from flask import request
-from langdetect import detect
 
 from lib.model import IntentClassifier
 from lib.tokenizer import KuromojiTokenizer
@@ -16,10 +15,8 @@ from lib.tokenizer import KuromojiTokenizer
 """
 Sample json request data:
 {
-    "title": "content title here",
-    "description": "content description here",
-    "language": "auto",
-    "threshold": "0.5"
+    "text": "input text here",
+    "language": "en"
 }
 
 Sample request:
@@ -40,36 +37,20 @@ def search():
         'description': 'dummy description'
         }] })
 
-@app.route('/infer', methods=['POST'])
-def predict():
+@app.route('/intent', methods=['POST'])
+def get_intent():
     try:
         json_ = request.get_json()
-        query = json_["title"] + "\n" + json_["description"]
-
-        # Automatic language detection
-        if json_["language"] == "auto":
-            language = detect(query)
-            app.logger.debug("Detected Language: %s", language)
-
-            if language != 'en' and language != 'ja':
-                language = 'ja'
-                app.logger.debug("Defaulting to ja")
-
-        # Use specified language
-        else:
-            language = json_["language"]
+        query = json_["text"]
+        language = json_["language"]
 
         if language == "en":
-            predictions = list(
-                en_model.infer([query], float(json_["threshold"]))
-                )
+            prediction = en_model.infer([query])
 
         elif language == "ja":
-            predictions = list(
-                ja_model.infer([query], float(json_["threshold"]))
-                )
+            prediction = ja_model.infer([query])
 
-        return jsonify({'predictions': predictions})
+        return jsonify(prediction)
 
     except Exception as e:
         return 'Error' if is_production else jsonify(
@@ -84,11 +65,11 @@ except Exception as e:
 
 try:
     ja_model = IntentClassifier(tokenizer=KuromojiTokenizer().tokenize)
-    ja_model.load_model("models/ja_model.pkl")
-    app.logger.info('Model loaded: models/ja_model.pkl')
+    ja_model.load_model("models/en_intent_model.pkl")
+    app.logger.info('Model loaded: models/ja_intent_model.pkl')
     en_model = IntentClassifier(tokenizer=None)
-    en_model.load_model("models/en_model.pkl")
-    app.logger.info('Model loaded: models/en_model.pkl')
+    en_model.load_model("models/en_intent_model.pkl")
+    app.logger.info('Model loaded: models/en_intent_model.pkl')
 
 
 except Exception as e:

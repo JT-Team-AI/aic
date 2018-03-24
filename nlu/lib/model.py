@@ -73,7 +73,7 @@ class IntentClassifier(object):
         self.count_vectorizer = CountVectorizer(tokenizer=self.tokenizer,
                                                 vocabulary=self.vocabulary)
 
-    def evaluate(self, test_size=0.2, max_iter=200, threshold=0.5):
+    def evaluate(self, test_size=0.2, max_iter=200):
 
         self.test_vectorizer = TfidfVectorizer(tokenizer=self.tokenizer)
         self.test_model = neural_network.MLPClassifier(max_iter=max_iter)
