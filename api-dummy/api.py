@@ -1,9 +1,6 @@
-import os, sys
-path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(path)
-
 import lib.app_init
 
+import sys
 import traceback
 import pdb
 import json
