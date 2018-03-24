@@ -92,9 +92,6 @@ class TopBar extends Component {
 
     return (
       <div style={{ height: 32, display: 'flex' }}>
-        <h3 style={{ marginLeft: 8, marginTop: 5 }}>
-          {filename}
-        </h3>
         <div style={{flex: 1}} />
         <Button
           style={ styles.button }
