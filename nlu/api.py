@@ -38,7 +38,7 @@ def search():
         'description': 'dummy description'
         }] })
 
-@app.route('/intent', methods=['POST'])
+@app.route('data/intent', methods=['POST'])
 def get_intent():
     try:
         json_ = request.get_json()
@@ -58,7 +58,7 @@ def get_intent():
             {'error': str(e), 'trace': traceback.format_exc()}
             )
 
-@app.route('/entity', methods=['POST'])
+@app.route('data/entity', methods=['POST'])
 def get_entity():
     try:
         json_ = request.get_json()
