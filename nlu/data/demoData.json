@@ -1,0 +1,60 @@
+{
+  "rasa_nlu_data": {
+    "common_examples": [
+      {
+        "text": "please set maximum price to 3000 yen",
+        "intent": "set_maximum_price",
+        "entities": [
+          {
+            "start": 28,
+            "end": 36,
+            "value": "3000 yen",
+            "entity": "money"
+          }
+        ]
+      },
+      {
+        "text": "set minimum price to 1000 yen",
+        "intent": "set_minimum_price",
+        "entities": [
+          {
+            "start": 21,
+            "end": 29,
+            "value": "1000 yen",
+            "entity": "money"
+          }
+        ]
+      },
+      {
+        "text": "change max price to 2000 yen",
+        "intent": "set_maximum_price",
+        "entities": []
+      },
+      {
+        "text": "10000 yen should be the new minimum price",
+        "intent": "set_minimum_price",
+        "entities": []
+      },
+      {
+        "text": "lowest price to 5000 yen please",
+        "intent": "set_minimum_price",
+        "entities": []
+      },
+      {
+        "text": "max price to 20000",
+        "intent": "set_maximum_price",
+        "entities": []
+      },
+      {
+        "text": "maximum price value to 40000 yen",
+        "intent": "set_maximum_price",
+        "entities": []
+      },
+      {
+        "text": "minimum price should be 21000 please",
+        "intent": "set_minimum_price",
+        "entities": []
+      }
+    ]
+  }
+}
