@@ -33,6 +33,13 @@ curl -i -H "Content-Type: application/json" -X POST -d "{\"title\": \"kyoto\", \
 app = Flask(__name__)
 
 
+@app.route('/data/search', methods=['POST'])
+def search():
+    return jsonify({ 'results': [{
+        'title': 'dummy title',
+        'description': 'dummy description'
+        }] })
+
 @app.route('/infer', methods=['POST'])
 def predict():
     try:
