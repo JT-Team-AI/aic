@@ -1,13 +1,14 @@
 import json
-from lib import tinysegmenter
 from logging import getLogger
 import re
 import requests
 
 logger = getLogger(__name__)
 
-
-# Simple Japanese Language Tokenizer based on TinySegmenter
+def read_json(path):
+    with open(path, 'rb') as f:
+        data = json.load(f)
+    return data
 
 def preprocess(data_path, tags_path, output_path, language_id, max_df_ratio=0.8, min_occurence=10):
     match_language = lambda d : d['language_id'] == language_id
