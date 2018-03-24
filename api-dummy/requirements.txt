@@ -5,6 +5,7 @@ pandas==0.20.3
 elasticsearch==6.0.0
 scikit_learn==0.19.1
 flask==0.12.2
+spacy==2.0.9
 gunicorn
 langdetect==1.0.7
 jieba

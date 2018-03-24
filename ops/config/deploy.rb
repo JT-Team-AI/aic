@@ -7,6 +7,7 @@ server ENV.fetch('SERVER'),
     forward_agent: true,
     auth_methods: %w[publickey],
   }
+
 set :application, 'aic'
 set :tmp_dir, '/tmp/aic'
 set :repo_url, 'git@github.com:JT-Team-AI/aic.git'
@@ -19,6 +20,7 @@ set :pty, true
 append :linked_dirs, 'log', 'tmp', 'venv_data-science'
 set :keep_releases, 5
 set :keep_assets, 5
+set :api_dir, 'api-dummy'
 
 after 'deploy:updated', 'data_science:bundle'
 after 'deploy:publishing', 'gunicorn:restart'
