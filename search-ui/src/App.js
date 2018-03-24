@@ -14,6 +14,28 @@ const mapState = (state) => ({
   results: state.search.results,
 })
 
+const ENTITY_MAP = {
+  PERSON        :'Person',
+  NORP          :'Nationalities/Groups',
+  FACILITY      :'Facility',
+  ORG           :'Organization',
+  GPE           :'Country/City/State',
+  LOC           :'Location',
+  PRODUCT       :'Product',
+  EVENT         :'Event',
+  WORK_OF_ART   :'Art',
+  LAW           :'Law',
+  LANGUAGE      :'Language',
+  DATE          :'Date',
+  TIME          :'Time',
+  PERCENT       :'Percentage',
+  MONEY         :'Money',
+  QUANTITY      :'Quantity',
+  ORDINAL       :'Ordinal',
+  CARDINAL      :'Numerals',
+};
+
+
 const App = ({ intent, entity, results }) => (
   <div className="app">
     <ul className="nav nav-tabs">
@@ -25,26 +47,38 @@ const App = ({ intent, entity, results }) => (
     </div>
     <div className="container">
       <div className="app-searchanalyze">
-        <div className="app-intent">
-          <div className="app-intent-label">{intent.top_intent}</div>
-          <div className="app-intent-score">{intent.score}</div>
+        <div className="app-intent panel col-md-6">
+          <div className="panel-heading">
+            <h3 class="panel-title">Your intent</h3>
+          </div>
+          <div className="panel-body">
+            <div className="app-intent-label">{intent.top_intent}</div>
+            <div className="app-intent-score">{intent.score}</div>
+          </div>
         </div>
-        <table className="app-entity table">
-          {
-            entity.map(ent => (<tr className="list-group-item" key={ent.name}>
-              <td className="app-entity-label">{ent.type}</td>
-              <td className="app-entity-score">{ent.name}</td>
-            </tr>))
-           }
-        </table>
+        <div className="app-entity panel col-md-6">
+          <div className="panel-heading">
+            <h3 class="panel-title">Your intent</h3>
+          </div>
+          <div className="panel-body">
+            {
+              entity.map(ent => (<div key={ent.name}>
+                <div className="app-entity-label">{ENTITY_MAP[ent.type]}</div>
+                <div className="app-entity-score">{ent.name}</div>
+              </div>))
+            }
+          </div>
+        </div>
       </div>
     </div>
-    <div className="app-results">{
-        results.map(r => <div className="app-results-row" key={r.title}>
-          <div className="app-results-row-title">{r.title}</div>
-          <div className="app-results-row-description">{r.description}</div>
-        </div>)
-    }</div>
+    <div className="container">
+      <ul className="app-results list-group">{
+        results.map(r => <li className="app-results-row list-group-item" key={r.id}>
+          <div className="app-results-row-title">{r.attributes.title}</div>
+          <div className="app-results-row-description">{r.attributes.description}</div>
+        </li>)
+      }</ul>
+    </div>
   </div>
 );
 

@@ -2,10 +2,10 @@ import { List } from 'immutable';
 
 import {
   ERROR,
-  RECEIVED_SEARCH_RESULT,
   RECEIVED_INTENT_RESULT,
   RECEIVED_ENTITY_RESULT,
   RECEIVED_SEMANTIC_RESULT,
+  RECEIVED_SEARCH_RESULT,
 } from './actions'
 
 export default function reducer (state: Object = {}, action: Object): Object {
@@ -14,11 +14,6 @@ export default function reducer (state: Object = {}, action: Object): Object {
       // TODO
       console.log('Error', action);
       return state;
-    case RECEIVED_SEARCH_RESULT:
-      return {
-        ...state,
-        results: action.results,
-      };
     case RECEIVED_INTENT_RESULT:
       return {
         ...state,
@@ -33,6 +28,11 @@ export default function reducer (state: Object = {}, action: Object): Object {
       return {
         ...state,
         semantic: action.results,
+      };
+    case RECEIVED_SEARCH_RESULT:
+      return {
+        ...state,
+        results: action.results,
       };
     default:
       return state
