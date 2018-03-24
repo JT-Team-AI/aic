@@ -1,4 +1,4 @@
-{
+﻿{
   "rasa_nlu_data": {
     "common_examples": [
       {
@@ -7,9 +7,9 @@
         "entities": [
           {
             "start": 28,
-            "end": 36,
-            "value": "3000 yen",
-            "entity": "money"
+            "end": 32,
+            "value": "3000",
+            "entity": "MONEY"
           }
         ]
       },
@@ -19,41 +19,83 @@
         "entities": [
           {
             "start": 21,
-            "end": 29,
-            "value": "1000 yen",
-            "entity": "money"
+            "end": 25,
+            "value": "1000",
+            "entity": "MONEY"
           }
         ]
       },
       {
         "text": "change max price to 2000 yen",
         "intent": "set_maximum_price",
-        "entities": []
+        "entities": [
+          {
+            "start": 20,
+            "end": 24,
+            "value": "2000",
+            "entity": "MONEY"
+          }
+        ]
       },
       {
         "text": "10000 yen should be the new minimum price",
         "intent": "set_minimum_price",
-        "entities": []
+        "entities": [
+          {
+            "start": 0,
+            "end": 5,
+            "value": "10000",
+            "entity": "MONEY"
+          }
+        ]
       },
       {
         "text": "lowest price to 5000 yen please",
         "intent": "set_minimum_price",
-        "entities": []
+        "entities": [
+          {
+            "start": 16,
+            "end": 20,
+            "value": "5000",
+            "entity": "MONEY"
+          }
+        ]
       },
       {
         "text": "max price to 20000",
         "intent": "set_maximum_price",
-        "entities": []
+        "entities": [
+          {
+            "start": 13,
+            "end": 18,
+            "value": "20000",
+            "entity": "MONEY"
+          }
+        ]
       },
       {
         "text": "maximum price value to 40000 yen",
         "intent": "set_maximum_price",
-        "entities": []
+        "entities": [
+          {
+            "start": 23,
+            "end": 28,
+            "value": "40000",
+            "entity": "MONEY"
+          }
+        ]
       },
       {
         "text": "minimum price should be 21000 please",
         "intent": "set_minimum_price",
-        "entities": []
+        "entities": [
+          {
+            "start": 24,
+            "end": 29,
+            "value": "21000",
+            "entity": "MONEY"
+          }
+        ]
       }
     ]
   }
