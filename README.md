@@ -8,8 +8,8 @@
 * nginx
 
     cd nginx
-    nginx -p /Users/sndyuk/projects/aic/nginx -c /Users/sndyuk/projects/aic/nginx/nginx.conf
-
+    # $(pwd) is the absolute path
+    nginx -p $(pwd) -c $(pwd)/nginx.conf
 
 * rasa-nlu-trainer
 
