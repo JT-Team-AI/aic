@@ -1,7 +1,7 @@
 import { List } from 'immutable';
 import { Observable } from 'rxjs/Observable';
 
-const API_PATH = 'http://localhost:8001/data';
+const API_PATH = '/data';
 
 export const ERROR = 'ERROR'
 export const SEARCH = 'SEARCH'
