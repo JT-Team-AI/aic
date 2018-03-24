@@ -11,12 +11,6 @@
     # $(pwd) is the absolute path
     nginx -p $(pwd) -c $(pwd)/nginx.conf
 
-* rasa-nlu-trainer
-
-    cd rasa-nlu-trainer
-    npm install # to install dependencies
-    npm start
-
 * api (or api-dummy)
 
     cd api (or api-dummy)

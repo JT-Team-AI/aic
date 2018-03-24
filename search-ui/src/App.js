@@ -7,7 +7,7 @@ import './App.css';
 
 
 const mapState = (state) => ({
-  results: state.results
+  results: state.search.results
 })
 
 const App = ({ results }) => (

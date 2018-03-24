@@ -15,18 +15,31 @@ import 'rxjs/add/observable/dom/ajax';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
+import { Route } from 'react-router-dom'
+import { Switch } from 'react-router';
+import { ConnectedRouter } from 'react-router-redux';
 import './index.css';
 import App from './App';
+import Rasa from './rasa/components/App';
+import enUS from 'antd/lib/locale-provider/en_US'
+import { LocaleProvider } from 'antd'
 import registerServiceWorker from './registerServiceWorker';
-import store from './state/store'
+import store, { history } from './state/store'
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <LocaleProvider locale={enUS}>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route path="/rasa" component={Rasa} />
+        </Switch>
+      </ConnectedRouter>
+    </LocaleProvider>
   </Provider>,
   document.getElementById('root'));
 registerServiceWorker();
 
-if (window.location.href === 'http://localhost:3001/') {
+if (window.location.href === 'http://localhost:3000/') {
   window.location.href = 'http://localhost:8001/';
 }
