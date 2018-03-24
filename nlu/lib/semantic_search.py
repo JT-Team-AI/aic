@@ -7,7 +7,7 @@ class SemanticSearch(object):
         'text': "sample text",
         'language': "en",
         'intent': {
-            'intent',
+            'top_intent',
             'score'
         },
         'entities': [
@@ -57,7 +57,7 @@ class SemanticSearch(object):
         
         search_criteria = self.current_criteria
         
-        intent_class = intent['intent']
+        intent_class = intent['top_intent']
         intent_score = intent['score']
         
         if len(entities)>0 and entities[0]['type']=='MONEY':
