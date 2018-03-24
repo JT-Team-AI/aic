@@ -2,6 +2,7 @@
 import lib.app_init
 
 from lib.model import IntentClassifier
+from lib.model import EntityExtractor
 from lib.tokenizer import KuromojiTokenizer
 from logging import getLogger
 
@@ -16,7 +17,8 @@ parser = argparse.ArgumentParser()
 group = parser.add_mutually_exclusive_group()
 group.add_argument("--train", action="store_true")
 group.add_argument("--evaluate", action="store_true")
-group.add_argument("--infer", action="store_true")
+group.add_argument("--intent", action="store_true")
+group.add_argument("--entity", action="store_true")
 
 # Model arguments
 parser.add_argument('--model_path', type=str, default="./models/model.pkl", help='Output path for trained model')
@@ -34,21 +36,20 @@ if args.tokenizer == "ja":
 elif args.tokenizer == "en":
     tokenizer = None
 
-predictor = IntentClassifier(tokenizer=tokenizer)
-
-
 if args.train:
-    predictor.load_data(path=args.data_path)
-    predictor.train(max_iter=args.iterations)
-    predictor.save_model(path=args.model_path)
+    intent_classifier = IntentClassifier(tokenizer=tokenizer)
+    intent_classifier.load_data(path=args.data_path)
+    intent_classifier.train(max_iter=args.iterations)
+    intent_classifier.save_model(path=args.model_path)
 
 elif args.evaluate:
-    predictor.load_data(path=args.data_path)
-    predictor.evaluate(test_size=(1-args.split_ratio),
-                       max_iter=args.iterations)
+    intent_classifier = IntentClassifier(tokenizer=tokenizer)
+    intent_classifier.load_data(path=args.data_path)
+    intent_classifier.evaluate(test_size=(1-args.split_ratio), max_iter=args.iterations)
 
-elif args.infer:
-    predictor.load_model(args.model_path)
+elif args.intent:
+    intent_classifier = IntentClassifier(tokenizer=tokenizer)
+    intent_classifier.load_model(args.model_path)
 
     if args.query_type == "JSON":
         dictionary = json.loads(args.query)
@@ -56,8 +57,21 @@ elif args.infer:
     else:
         q = args.query
 
-    predictions = predictor.infer([q])
+    predictions = intent_classifier.infer([q])
     logger.info("Predicted intent: %s", predictions)
+
+elif args.entity:
+    entity_extractor = EntityExtractor()
+    entity_extractor.load_model()
+
+    if args.query_type == "JSON":
+        dictionary = json.loads(args.query)
+        q = dictionary['text']
+    else:
+        q = args.query
+
+    predictions = entity_extractor.infer(q)
+    logger.info("Extracted entities: %s", predictions)
 
 else:
     logger.warn("No mode specified")
