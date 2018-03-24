@@ -1,7 +1,6 @@
 from gensim.models.doc2vec import TaggedDocument
 from elasticsearch import Elasticsearch
 from lib.app_init import config
-import MeCab
 import glob
 import re
 
@@ -23,10 +22,10 @@ class MecabTokenizer(object):
 	    return filtered
 
 class KuromojiTokenizer(object):
-    def __init__(self):
-        self.es = Elasticsearch([config['elasticsearch']['url']],
-          verify_certs=False
-        )
+    #  def __init__(self):
+        #        self.es = Elasticsearch([config['elasticsearch']['url']],
+        #          verify_certs=False
+        #        )
 
     def tokenize(self, text):
         params = {

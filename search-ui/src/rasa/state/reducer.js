@@ -137,7 +137,7 @@ export default function reducer (
     case CLOSE_ADD_MODAL: {
       state = immutable.del(
         state,
-        `examples.${getExampleIndex(state.rasa.idExampleInModal)}`,
+        `examples.${getExampleIndex(state.idExampleInModal)}`,
       )
       return immutable.set(state, `idExampleInModal`, null)
     }

@@ -49,6 +49,10 @@ class App extends Component {
 
     return (
       <div>
+        <ul className="nav nav-tabs">
+          <li role="presentation"><a href="/">Search</a></li>
+          <li role="presentation" className="active"><a href="/rasa/">Train</a></li>
+        </ul>
         <ExampleTable
           intents={intents}
           entityNames={entityNames}

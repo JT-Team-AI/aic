@@ -107,3 +107,7 @@ body {
 .example-table .ant-table-title {
   padding: 0px;
 }
+
+.app-searchbox {
+  padding: 3em 0;
+}
