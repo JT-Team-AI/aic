@@ -1,0 +1,8 @@
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: simple_formatter
+
+root:
+  level: DEBUG
+  handlers: [console]

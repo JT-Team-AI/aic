@@ -1,0 +1,8 @@
+version: 1
+
+formatters:
+  formatter:
+    format: '[%(asctime)s]%(levelname)s - %(filename)s#%(funcName)s:%(lineno)d: %(message)s'
+    datefmt: 'Y/%m/%d %H:%M:%S'
+  simple_formatter:
+    format: '%(filename)s:%(lineno)d: %(message)s'

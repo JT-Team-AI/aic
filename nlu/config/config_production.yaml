@@ -1,0 +1,10 @@
+handlers:
+  file:
+    class: logging.FileHandler
+    formatter: formatter
+    filename: shared/log/data-science.log
+    encoding: utf8
+
+root:
+  level: INFO
+  handlers: [file]
