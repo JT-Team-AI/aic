@@ -94,6 +94,6 @@ const makeSearchUrl = semantic => {
 export const searchEpic = action$ =>
   action$.ofType(SEARCH)
     .switchMap(action => Observable.ajax.getJSON(makeSearchUrl(action.semantic)))
-    .map(payload => ({ type: RECEIVED_SEARCH_RESULT, results: payload.json }))
+    .map(payload => ({ type: RECEIVED_SEARCH_RESULT, results: List(payload.data) }))
     .catch(ex => Observable.of({ type: ERROR, ex })
     );
