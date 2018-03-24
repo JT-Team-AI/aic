@@ -22,7 +22,7 @@ group.add_argument("--train_entity", action="store_true")
 group.add_argument("--get_entity", action="store_true")
 
 # Model arguments
-parser.add_argument('--model_path', type=str, default="./models/en_intent_model.pkl", help='Output path for trained model')
+parser.add_argument('--model_path', type=str, default=None, help='Output path for trained model')
 parser.add_argument('--data_path', type=str, default="data/testData.json", help='Path to processed dataset for training')
 parser.add_argument('--tokenizer', type=str, default="en", help='Language of training data, en or ja')
 parser.add_argument('--split_ratio', type=float, default=0.8, help='Ratio of training data for evaluation')
@@ -63,7 +63,7 @@ elif args.get_intent:
 
 elif args.get_entity:
     entity_extractor = EntityExtractor()
-    entity_extractor.load_model()
+    entity_extractor.load_model(args.model_path)
 
     if args.query_type == "JSON":
         dictionary = json.loads(args.query)
