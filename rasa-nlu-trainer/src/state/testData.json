@@ -1,0 +1,42 @@
+{
+  "rasa_nlu_data": {
+    "common_examples": [
+      {
+        "text": "Tomorrow dinner at Tokyo",
+        "intent": "restaurant_search",
+        "entities": [
+          {
+            "start": 19,
+            "end": 24,
+            "value": "Tokyo",
+            "entity": "location"
+          },
+          {
+            "start": 9,
+            "end": 15,
+            "value": "dinner",
+            "entity": "time"
+          },
+          {
+            "start": 0,
+            "end": 8,
+            "value": "Tomorrow",
+            "entity": "day"
+          }
+        ]
+      },
+      {
+        "text": "I want to have Japanese",
+        "intent": "restaurant_search",
+        "entities": [
+          {
+            "start": 15,
+            "end": 23,
+            "value": "Japanese",
+            "entity": "Recipe"
+          }
+        ]
+      }
+    ]
+  }
+}

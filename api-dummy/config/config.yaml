@@ -1,0 +1,14 @@
+version: 1
+
+formatters:
+  simple_formatter:
+    format: '%(name)s %(filename)s:%(lineno)d: %(message)s'
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: simple_formatter
+
+root:
+  level: DEBUG
+  handlers: [console]

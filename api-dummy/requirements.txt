@@ -1,0 +1,13 @@
+numpy==1.13.1
+scipy==1.0.0
+requests==2.18.4
+pandas==0.20.3
+elasticsearch==6.0.0
+scikit_learn==0.19.1
+flask==0.12.2
+gunicorn
+langdetect==1.0.7
+jieba
+pyyaml
+flake8==2.5.5
+hacking==1.0.0
