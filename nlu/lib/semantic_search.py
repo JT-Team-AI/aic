@@ -1,5 +1,6 @@
 import pdb
 import re
+import copy
 
 def find_numbers(string, ints=True):
     numexp = re.compile(r'[-]?\d[\d,]*[\.]?[\d{2}]*') #optional - in front
@@ -76,7 +77,7 @@ class SemanticSearch(object):
         }
         
         # current_criteria should initialize with default_criteria and change with every call to update_search_criteria
-        self.current_criteria = self.default_criteria.copy()
+        self.current_criteria = copy.deepcopy(self.default_criteria)
     
     def update_search_criteria(self, nlu_data):
         text = nlu_data['text']
@@ -93,7 +94,8 @@ class SemanticSearch(object):
             return self.current_criteria
 
         if intent_class=="clear_search":
-          self.current_criteria = self.default_criteria.copy()
+          pdb.set_trace()
+          self.current_criteria = copy.deepcopy(self.default_criteria)
           return self.current_criteria
 
         money = get_entity(entities, 'MONEY')
@@ -110,7 +112,7 @@ class SemanticSearch(object):
             search_criteria['filter']['budget_more'] = find_numbers(money['name'])[0]
 
         if intent_class=="set_location":
-            loc = location and LOCATION[location['name']]
+            loc = location and LOCATION.get(location['name'], None)
             if loc:
                 search_criteria['filter']['location'] = loc
             else:
