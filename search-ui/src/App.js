@@ -22,7 +22,7 @@ const INTENT_MAP = {
   find_creative: 'Find something creative activity',
   find_relaxing: 'Find something relaxing activity',
   find_cultural: 'Find something cultural activity',
-  change_language: 'Change language',
+  set_language: 'Change language',
 };
 
 const ENTITY_MAP = {
@@ -118,10 +118,10 @@ const App = ({ intent, entity, semantic, results }) => (
                 </thead>
                 <tbody>
                   {semantic.filter.budget_less && <tr><td>Budget less than</td><td>{semantic.filter.budget_less} yen</td></tr>}
-                  {semantic.filter.budget_less && <tr><td>Budget greater than</td><td>{semantic.filter.budget_more} yen</td></tr>}
-                  {semantic.filter.distance && <tr><td></td><td>Around {semantic.filter.distance}m from {semantic.filter.location.lat}° N, {semantic.filter.location.lng}° E</td></tr>}
-                  {semantic.filter.distance && <tr><td></td><td>Around {semantic.filter.distance}m from {semantic.filter.location.lat}° N, {semantic.filter.location.lng}° E</td></tr>}
-                  {semantic.filter.langs && <tr><td></td><td>{semantic.filter.langs}</td></tr>}
+                  {semantic.filter.budget_more && <tr><td>Budget greater than</td><td>{semantic.filter.budget_more} yen</td></tr>}
+                  {semantic.filter.distance && <tr><td>Location</td><td>Around {semantic.filter.distance}m from {semantic.filter.location.lat}° N, {semantic.filter.location.lng}° E</td></tr>}
+                  {semantic.filter.tags && <tr><td>Theme</td><td>{semantic.filter.tags}</td></tr>}
+                  {semantic.langs && <tr><td>Language</td><td>{semantic.langs[0]}</td></tr>}
                 </tbody>
               </table>
             }

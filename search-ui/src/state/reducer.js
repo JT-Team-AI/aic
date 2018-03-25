@@ -30,6 +30,14 @@ export default function reducer (state: Object = {}, action: Object): Object {
         semantic: action.results,
       };
     case RECEIVED_SEARCH_RESULT:
+      if (state.intent && state.intent.top_intent === 'clear_search') {
+        return {
+          intent: state.intent,
+          entity: [],
+          semantic: [],
+          results: [],
+        };
+      }
       return {
         ...state,
         results: action.results,

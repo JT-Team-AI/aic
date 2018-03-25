@@ -17,8 +17,15 @@ LOCATION = {
   'Sky Tree': { 'lat': 35.7101, 'lng': 139.8107 }
 }
 
-def find_location(name):
-  return LOCATION[name]
+LANGUAGE = {
+'English': 'en',
+'Japanese': 'ja',
+'japan': 'ja'
+}
+
+def get_entity(entities, type):
+   entity = [x for x in entities if x['type']==type]
+   return entity[0] if len(entity) > 0 else None
 
 class SemanticSearch(object):
     
@@ -69,7 +76,7 @@ class SemanticSearch(object):
         }
         
         # current_criteria should initialize with default_criteria and change with every call to update_search_criteria
-        self.current_criteria = self.default_criteria
+        self.current_criteria = self.default_criteria.copy()
     
     def update_search_criteria(self, nlu_data):
         text = nlu_data['text']
@@ -82,17 +89,19 @@ class SemanticSearch(object):
         intent_class = intent['top_intent']
         intent_score = intent['score']
 
-        if intent_score < 0.4:
+        if intent_score < 0.3:
             return self.current_criteria
 
         if intent_class=="clear_search":
-          self.current_criteria = self.default_criteria
+          self.current_criteria = self.default_criteria.copy()
           return self.current_criteria
 
-        money = next(x for x in entities if x['type']=='MONEY')
-        cardinal = next(x for x in entities if x['type']=='CARDINAL')
-        facility = next(x for x in entities if x['type']=='FAC')
-        location = next(x for x in entities if x['type']=='GPE')
+        money = get_entity(entities, 'MONEY')
+        cardinal = get_entity(entities, 'CARDINAL')
+        facility = get_entity(entities, 'FAC')
+        location = get_entity(entities, 'GPE')
+        natinality = get_entity(entities, 'NORP')
+        language = get_entity(entities, 'LANGUAGE')
 
         if intent_class=="set_maximum_price" and money:
             search_criteria['filter']['budget_less'] = find_numbers(money['name'])[0]
@@ -100,21 +109,32 @@ class SemanticSearch(object):
         elif intent_class=="set_minimum_price" and money:
             search_criteria['filter']['budget_more'] = find_numbers(money['name'])[0]
 
-        if intent_class=="set_location" and location:
-            loc = find_location(location['name'])
+        if intent_class=="set_location":
+            loc = location and LOCATION[location['name']]
             if loc:
                 search_criteria['filter']['location'] = loc
             else:
-              search_criteria['filter']['words'] = [location['name']]
+                search_criteria['filter']['words'] = [facility['name'] or location['name']]
+
+            if cardinal:
+                search_criteria['filter']['distance'] = find_numbers(cardinal['name'])[0]
+            else:
+                search_criteria['filter']['distance'] = 10000
 
         if intent_class=="find_creative":
-            search_criteria['filter']['tags'] = ['Art Galleries', 'Handmade']
+            search_criteria['filter']['tags'] = ['Art Galleries']
 
         if intent_class=="find_relaxing":
-            search_criteria['filter']['tags'] = ['Hot springs / Spa', 'Esthetic']
+            search_criteria['filter']['tags'] = ['Hot springs / Spa']
 
         if intent_class=="find_cultural":
-            search_criteria['filter']['tags'] = ['Gourmet', 'Town', 'Tradition']
+            search_criteria['filter']['tags'] = ['Tradition']
+
+        if intent_class=="set_language":
+            lang = (location and LANGUAGE[location['name']]) or (natinality and LANGUAGE[natinality['name']]) or (language and LANGUAGE[language['name']])
+            if lang:
+                search_criteria['langs'] = [lang]
+                search_criteria['langs'] = [lang]
 
         self.current_criteria = search_criteria
         return search_criteria
