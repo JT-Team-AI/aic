@@ -7,6 +7,7 @@ import spacy
 from lib.utils import read_json
 
 import json
+import random
 import numpy as np
 import pandas as pd
 import pickle as pkl
@@ -151,17 +152,35 @@ class EntityExtractor(object):
 
         self.tokenizer = tokenizer
         
-    def load_data(self, path="data/testData.json"):
-        raise NotImplementedError
+    def load_data(self, path="data/testData.json", language='en'):
+        data = read_json(path)
+        examples = data['rasa_nlu_data']['common_examples']
+        self.texts = [x['text'] for x in examples]
+        self.entities = [x['entities'] for x in examples]
+        entities_ = [{'entities': [(i['start'], i['end'], i['entity']) for i in j]} for j in self.entities]
+        self.train_data = list(zip(self.texts, entities_))
+        self.language = language
 
-    def train(self):
-        raise NotImplementedError
+    def train(self, n_iters=200):
+        self.model = spacy.blank(self.language)
+        logger.info("Training Entity Recognition Model")
+        optimizer = self.model.begin_training()
+        for i in range(n_iters):
+            random.shuffle(self.train_data)
+            for text, annotations in self.train_data:
+                self.model.update([text], [annotations], sgd=optimizer)
+        logger.info("Training finished")
 
-    def save_model(self, path=None):
-        raise NotImplementedError
+    def save_model(self, path="models/en_entity_model"):
+        self.model.to_disk(path)
+        logger.info("Trained model saved to: %s", path)
 
     def load_model(self, path=None):
-        self.model = spacy.load('en_core_web_md')
+        if not path:
+            self.model = spacy.load('en_core_web_md')
+        else:
+            self.model = spacy.load(path)
+        logger.info("Loaded pre-trained model from: %s", path)
         
     def infer(self, query):
         doc = self.model(query)
@@ -176,4 +195,3 @@ class EntityExtractor(object):
             }
             results.append(result)
         return results
-

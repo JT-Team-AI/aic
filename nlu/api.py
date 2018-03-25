@@ -111,7 +111,8 @@ try:
     en_intent_model.load_model("models/demo_intent_model.pkl")
     app.logger.info('Model loaded: models/demo_intent_model.pkl')
     en_entity_model = EntityExtractor()
-    en_entity_model.load_model()
+    # Modify below path to select custom entity model
+    en_entity_model.load_model(path=None)
     app.logger.info('Loaded spacy pre-trained entity model')
     semantic_search = SemanticSearch()
     app.logger.info('Loaded semantic search model')
