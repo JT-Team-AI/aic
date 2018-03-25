@@ -652,6 +652,35 @@
         "text": "any kids events during this season",
         "intent": "find_cultural",
         "entities": []
+      },
+      {
+        "text": "Find something relaxing spot at Kushu",
+        "intent": "find_relaxing",
+        "entities": [
+          {
+            "start": 32,
+            "end": 37,
+            "value": "Kushu",
+            "entity": "GPE"
+          }
+        ]
+      },
+      {
+        "text": "I want to sleep more",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "Find something at Yakushima",
+        "intent": "set_location",
+        "entities": [
+          {
+            "start": 18,
+            "end": 27,
+            "value": "Yakushima",
+            "entity": "GPE"
+          }
+        ]
       }
     ]
   }

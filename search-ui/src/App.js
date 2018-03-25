@@ -121,6 +121,7 @@ const App = ({ intent, entity, semantic, results }) => (
                   {semantic.filter.budget_more && <tr><td>Budget greater than</td><td>{semantic.filter.budget_more} yen</td></tr>}
                   {semantic.filter.distance && <tr><td>Location</td><td>Around {semantic.filter.distance}m from {semantic.filter.location.lat}° N, {semantic.filter.location.lng}° E</td></tr>}
                   {semantic.filter.tags && <tr><td>Theme</td><td>{semantic.filter.tags}</td></tr>}
+                  {semantic.filter.words && <tr><td>Keyword</td><td>{semantic.filter.words}</td></tr>}
                   {semantic.langs && <tr><td>Language</td><td>{semantic.langs[0]}</td></tr>}
                 </tbody>
               </table>
@@ -130,8 +131,8 @@ const App = ({ intent, entity, semantic, results }) => (
       </div>
     </div>
     <div className="container">
-      <ul className="app-results list-group">{
-        results.map(r => <li className="app-results-row list-group-item" key={r.id}>
+      <ul className="app-results list-group">{ results.size > 0
+        ? results.map(r => <li className="app-results-row list-group-item" key={r.id}>
           <div className="media">
             <div className="media-left">
               <img className="media-object" src={`https://d3fbf9i27pqcx4.cloudfront.net/global/cropped/160/${r.id}-0.jpeg`} />
@@ -144,6 +145,7 @@ const App = ({ intent, entity, semantic, results }) => (
             </div>
           </div>
         </li>)
+        : <h4>0 result</h4>
       }</ul>
     </div>
   </div>

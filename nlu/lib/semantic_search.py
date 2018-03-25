@@ -90,19 +90,25 @@ class SemanticSearch(object):
         intent_class = intent['top_intent']
         intent_score = intent['score']
 
-        if intent_score < 0.3:
+        if intent_score < 0.25:
             return self.current_criteria
 
         if intent_class=="clear_search":
           self.current_criteria = copy.deepcopy(self.default_criteria)
           return self.current_criteria
 
+        person = get_entity(entities, 'PERSON')
+        natinality = get_entity(entities, 'NORP')
+        facility = get_entity(entities, 'FAC')
+        organization = get_entity(entities, 'ORG')
+        location = get_entity(entities, 'GPE')
+        product = get_entity(entities, 'PRODUCT')
+        event = get_entity(entities, 'EVENT')
+        art = get_entity(entities, 'WORK_OF_ART')
+        law = get_entity(entities, 'LAW')
+        language = get_entity(entities, 'LANGUAGE')
         money = get_entity(entities, 'MONEY')
         cardinal = get_entity(entities, 'CARDINAL')
-        facility = get_entity(entities, 'FAC')
-        location = get_entity(entities, 'GPE')
-        natinality = get_entity(entities, 'NORP')
-        language = get_entity(entities, 'LANGUAGE')
 
         if intent_class=="set_maximum_price" and money:
             search_criteria['filter']['budget_less'] = find_numbers(money['name'])[0]
@@ -114,13 +120,11 @@ class SemanticSearch(object):
             loc = location and LOCATION.get(location['name'], None)
             if loc:
                 search_criteria['filter']['location'] = loc
-            else:
-                search_criteria['filter']['words'] = [(facility and facility['name']) or (location and location['name'])]
 
-            if cardinal:
-                search_criteria['filter']['distance'] = find_numbers(cardinal['name'])[0]
-            else:
-                search_criteria['filter']['distance'] = 10000
+                if cardinal:
+                    search_criteria['filter']['distance'] = find_numbers(cardinal['name'])[0]
+                else:
+                    search_criteria['filter']['distance'] = 10000
 
         if intent_class=="find_creative":
             search_criteria['filter']['tags'] = ['Art Galleries']
@@ -135,7 +139,17 @@ class SemanticSearch(object):
             lang = (location and LANGUAGE[location['name']]) or (natinality and LANGUAGE[natinality['name']]) or (language and LANGUAGE[language['name']])
             if lang:
                 search_criteria['langs'] = [lang]
-                search_criteria['langs'] = [lang]
+
+        words = [
+            (facility and facility['name'])
+            or (location and location['name'])
+            or (person and person['name'])
+            or (organization and organization['name'])
+            or (product and product['name'])
+            or (event and event['name'])
+            or (art and art['name'])
+        ]
+        search_criteria['filter']['words'] = [x for x in words if x is not None]
 
         self.current_criteria = search_criteria
         return search_criteria

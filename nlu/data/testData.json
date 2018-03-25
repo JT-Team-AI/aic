@@ -1,184 +1,686 @@
-﻿{
+{
   "rasa_nlu_data": {
     "common_examples": [
       {
-        "text": "hey",
-        "intent": "greet",
-        "entities": []
-      },
-      {
-        "text": "howdy",
-        "intent": "greet",
-        "entities": []
-      },
-      {
-        "text": "hey there",
-        "intent": "greet",
-        "entities": []
-      },
-      {
-        "text": "hello",
-        "intent": "greet",
-        "entities": []
-      },
-      {
-        "text": "hi",
-        "intent": "greet",
-        "entities": []
-      },
-      {
-        "text": "i'm looking for a place to eat",
-        "intent": "restaurant_search",
-        "entities": []
-      },
-      {
-        "text": "i'm looking for a place in the north of town",
-        "intent": "restaurant_search",
+        "text": "please set maximum price to 3000 yen",
+        "intent": "set_maximum_price",
         "entities": [
           {
-            "start": 31,
-            "end": 36,
-            "value": "north",
-            "entity": "location"
+            "start": 28,
+            "end": 32,
+            "value": "3000",
+            "entity": "MONEY"
           }
         ]
       },
       {
-        "text": "show me chinese restaurants",
-        "intent": "restaurant_search",
+        "text": "set minimum price to 1000 yen",
+        "intent": "set_minimum_price",
         "entities": [
           {
-            "start": 8,
-            "end": 15,
-            "value": "chinese",
-            "entity": "cuisine"
+            "start": 21,
+            "end": 25,
+            "value": "1000",
+            "entity": "MONEY"
           }
         ]
       },
       {
-        "text": "yes",
-        "intent": "affirm",
-        "entities": []
-      },
-      {
-        "text": "yep",
-        "intent": "affirm",
-        "entities": []
-      },
-      {
-        "text": "yeah",
-        "intent": "affirm",
-        "entities": []
-      },
-      {
-        "text": "show me a mexican place in the centre",
-        "intent": "restaurant_search",
-        "entities": [
-          {
-            "start": 31,
-            "end": 37,
-            "value": "centre",
-            "entity": "location"
-          },
-          {
-            "start": 10,
-            "end": 17,
-            "value": "mexican",
-            "entity": "cuisine"
-          }
-        ]
-      },
-      {
-        "text": "bye",
-        "intent": "goodbye",
-        "entities": []
-      },
-      {
-        "text": "goodbye",
-        "intent": "goodbye",
-        "entities": []
-      },
-      {
-        "text": "good bye",
-        "intent": "goodbye",
-        "entities": []
-      },
-      {
-        "text": "stop",
-        "intent": "goodbye",
-        "entities": []
-      },
-      {
-        "text": "end",
-        "intent": "goodbye",
-        "entities": []
-      },
-      {
-        "text": "i am looking for an indian spot",
-        "intent": "restaurant_search",
+        "text": "change max price to 2000 yen",
+        "intent": "set_maximum_price",
         "entities": [
           {
             "start": 20,
-            "end": 26,
-            "value": "indian",
-            "entity": "cuisine"
+            "end": 24,
+            "value": "2000",
+            "entity": "MONEY"
           }
         ]
       },
       {
-        "text": "search for restaurants",
-        "intent": "restaurant_search",
-        "entities": []
+        "text": "10000 yen should be the new minimum price",
+        "intent": "set_minimum_price",
+        "entities": [
+          {
+            "start": 0,
+            "end": 5,
+            "value": "10000",
+            "entity": "MONEY"
+          }
+        ]
       },
       {
-        "text": "anywhere in the west",
-        "intent": "restaurant_search",
+        "text": "lowest price to 5000 yen please",
+        "intent": "set_minimum_price",
         "entities": [
           {
             "start": 16,
             "end": 20,
-            "value": "west",
-            "entity": "location"
+            "value": "5000",
+            "entity": "MONEY"
           }
         ]
       },
       {
-        "text": "central indian restaurant",
-        "intent": "restaurant_search",
+        "text": "max price to 20000",
+        "intent": "set_maximum_price",
+        "entities": [
+          {
+            "start": 13,
+            "end": 18,
+            "value": "20000",
+            "entity": "MONEY"
+          }
+        ]
+      },
+      {
+        "text": "maximum price value to 40000 yen",
+        "intent": "set_maximum_price",
+        "entities": [
+          {
+            "start": 23,
+            "end": 28,
+            "value": "40000",
+            "entity": "MONEY"
+          }
+        ]
+      },
+      {
+        "text": "minimum price should be 21000 please",
+        "intent": "set_minimum_price",
+        "entities": [
+          {
+            "start": 24,
+            "end": 29,
+            "value": "21000",
+            "entity": "MONEY"
+          }
+        ]
+      },
+      {
+        "text": "clear search",
+        "intent": "clear_search",
+        "entities": []
+      },
+      {
+        "text": "please clear search results",
+        "intent": "clear_search",
+        "entities": []
+      },
+      {
+        "text": "clear settings",
+        "intent": "clear_search",
+        "entities": []
+      },
+      {
+        "text": "need to do a new search",
+        "intent": "clear_search",
+        "entities": []
+      },
+      {
+        "text": "can you clear the search",
+        "intent": "clear_search",
+        "entities": []
+      },
+      {
+        "text": "i feel like doing something related to art",
+        "intent": "find_creative",
+        "entities": []
+      },
+      {
+        "text": "i want to do something cultural",
+        "intent": "find_cultural",
+        "entities": []
+      },
+      {
+        "text": "I feel stressed",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "find places near Shinjuku",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "set language to Japanese",
+        "intent": "set_language",
+        "entities": []
+      },
+      {
+        "text": "find me a spa",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "i want to relax",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "i am tired",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "something related to art",
+        "intent": "find_creative",
+        "entities": []
+      },
+      {
+        "text": "i want to start over",
+        "intent": "clear_search",
+        "entities": []
+      },
+      {
+        "text": "lowest price should be 500",
+        "intent": "set_minimum_price",
+        "entities": []
+      },
+      {
+        "text": "highest price should be 14000",
+        "intent": "set_maximum_price",
+        "entities": []
+      },
+      {
+        "text": "change search results to english",
+        "intent": "set_language",
+        "entities": []
+      },
+      {
+        "text": "change results to japanese",
+        "intent": "set_language",
+        "entities": []
+      },
+      {
+        "text": "japanese please",
+        "intent": "set_language",
+        "entities": []
+      },
+      {
+        "text": "english please",
+        "intent": "set_language",
+        "entities": []
+      },
+      {
+        "text": "i want to see results in japanese",
+        "intent": "set_language",
+        "entities": []
+      },
+      {
+        "text": "locations near Skytree",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "Shinjuku area",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "Osaka area please",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "places close to Tokyo Tower",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "show me cultural experiences",
+        "intent": "find_cultural",
+        "entities": []
+      },
+      {
+        "text": "cultural experiences please",
+        "intent": "find_cultural",
+        "entities": []
+      },
+      {
+        "text": "any relaxing activities?",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "do you have activities that are relaxing",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "i would like to experience japanese culture",
+        "intent": "find_cultural",
+        "entities": []
+      },
+      {
+        "text": "can you clear the search",
+        "intent": "clear_search",
+        "entities": []
+      },
+      {
+        "text": "max price to 20000",
+        "intent": "set_maximum_price",
+        "entities": []
+      },
+      {
+        "text": "locations close to Osaka",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "places around Shinjuku area",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "please set maximum price to 3000 yen",
+        "intent": "set_maximum_price",
+        "entities": [
+          {
+            "start": 28,
+            "end": 32,
+            "value": "3000",
+            "entity": "MONEY"
+          }
+        ]
+      },
+      {
+        "text": "set minimum price to 1000 yen",
+        "intent": "set_minimum_price",
+        "entities": [
+          {
+            "start": 21,
+            "end": 25,
+            "value": "1000",
+            "entity": "MONEY"
+          }
+        ]
+      },
+      {
+        "text": "change max price to 2000 yen",
+        "intent": "set_maximum_price",
+        "entities": [
+          {
+            "start": 20,
+            "end": 24,
+            "value": "2000",
+            "entity": "MONEY"
+          }
+        ]
+      },
+      {
+        "text": "10000 yen should be the new minimum price",
+        "intent": "set_minimum_price",
         "entities": [
           {
             "start": 0,
-            "end": 7,
-            "value": "central",
-            "entity": "location"
-          },
-          {
-            "start": 8,
-            "end": 14,
-            "value": "indian",
-            "entity": "cuisine"
+            "end": 5,
+            "value": "10000",
+            "entity": "MONEY"
           }
         ]
       },
       {
-        "text": "indeed",
-        "intent": "affirm",
+        "text": "lowest price to 5000 yen please",
+        "intent": "set_minimum_price",
+        "entities": [
+          {
+            "start": 16,
+            "end": 20,
+            "value": "5000",
+            "entity": "MONEY"
+          }
+        ]
+      },
+      {
+        "text": "max price to 20000",
+        "intent": "set_maximum_price",
+        "entities": [
+          {
+            "start": 13,
+            "end": 18,
+            "value": "20000",
+            "entity": "MONEY"
+          }
+        ]
+      },
+      {
+        "text": "maximum price value to 40000 yen",
+        "intent": "set_maximum_price",
+        "entities": [
+          {
+            "start": 23,
+            "end": 28,
+            "value": "40000",
+            "entity": "MONEY"
+          }
+        ]
+      },
+      {
+        "text": "minimum price should be 21000 please",
+        "intent": "set_minimum_price",
+        "entities": [
+          {
+            "start": 24,
+            "end": 29,
+            "value": "21000",
+            "entity": "MONEY"
+          }
+        ]
+      },
+      {
+        "text": "clear search",
+        "intent": "clear_search",
         "entities": []
       },
       {
-        "text": "that's right",
-        "intent": "affirm",
+        "text": "please clear search results",
+        "intent": "clear_search",
         "entities": []
       },
       {
-        "text": "ok",
-        "intent": "affirm",
+        "text": "clear settings",
+        "intent": "clear_search",
         "entities": []
       },
       {
-        "text": "great",
-        "intent": "affirm",
+        "text": "need to do a new search",
+        "intent": "clear_search",
         "entities": []
+      },
+      {
+        "text": "can you clear the search",
+        "intent": "clear_search",
+        "entities": []
+      },
+      {
+        "text": "i feel like doing something related to art",
+        "intent": "find_creative",
+        "entities": []
+      },
+      {
+        "text": "i want to do something cultural",
+        "intent": "find_cultural",
+        "entities": []
+      },
+      {
+        "text": "I feel stressed",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "find places near Shinjuku",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "set language to Japanese",
+        "intent": "set_language",
+        "entities": []
+      },
+      {
+        "text": "find me a spa",
+        "intent": "find_cultural",
+        "entities": []
+      },
+      {
+        "text": "hi are there any cool things around this area",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "Recommend shopping place",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "I want to set the price lower than 500 dollar",
+        "intent": "set_maximum_price",
+        "entities": []
+      },
+      {
+        "text": "What should i do after I finish sight seeing in Tokyo Tower",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "What is the must do things in Osaka",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "Now i am heading to Osaka any recommend places",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "Are there any good places around Skytree",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "Ok now I am at Osaka what shall i do next",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "Alright finally arrive Osaka",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "Alright I am now around Tokyo Tower",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "Alright now I am close to the Skytree",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "Oh I lost my direction inside the Shinjuku station,which exit shall i go out?",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "Hi help me to find an event that around 2000yen at Shinjuku ",
+        "intent": "set_minimum_price",
+        "entities": []
+      },
+      {
+        "text": "Finally get out of shinjuku station any event or party can I join",
+        "intent": "find_cultural",
+        "entities": []
+      },
+      {
+        "text": "Hi I wanna get a hair cut, show me some place where i can cut my hair",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "Hi I have no idea about any beauty salon around this area, show me",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "recommend me some hair salon",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "Any recommended art gallery",
+        "intent": "find_cultural",
+        "entities": []
+      },
+      {
+        "text": "clear everything",
+        "intent": "clear_search",
+        "entities": []
+      },
+      {
+        "text": "clear the text",
+        "intent": "clear_search",
+        "entities": []
+      },
+      {
+        "text": "Any art gallery around this area",
+        "intent": "find_creative",
+        "entities": []
+      },
+      {
+        "text": "Oh i need a massage",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "Any traditional massage place",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "massage place less than 5000yen",
+        "intent": "set_maximum_price",
+        "entities": []
+      },
+      {
+        "text": "are there any native events today",
+        "intent": "find_cultural",
+        "entities": []
+      },
+      {
+        "text": "outdoors events",
+        "intent": "find_cultural",
+        "entities": []
+      },
+      {
+        "text": "Weekend events",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "event around Shinjuku please",
+        "intent": "find_creative",
+        "entities": []
+      },
+      {
+        "text": "just clear it",
+        "intent": "clear_search",
+        "entities": []
+      },
+      {
+        "text": "find me a massage place",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "what is the Japanese way of relaxation",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "show me some amazing architecture",
+        "intent": "find_creative",
+        "entities": []
+      },
+      {
+        "text": "fancy designed places",
+        "intent": "find_creative",
+        "entities": []
+      },
+      {
+        "text": "any native event in this month",
+        "intent": "find_cultural",
+        "entities": []
+      },
+      {
+        "text": "switch to English ",
+        "intent": "set_language",
+        "entities": []
+      },
+      {
+        "text": "any art gallery at Shinjuku",
+        "intent": "find_creative",
+        "entities": []
+      },
+      {
+        "text": "any art gallery near Skytree",
+        "intent": "find_creative",
+        "entities": []
+      },
+      {
+        "text": "show me some Onsen spots",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "Any onsen around this area",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "tell me where shall i go for onsen",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "where should i visit for Onsen",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "I am here at Shinjyuku",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "Now I arrived in Osaka",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "Any Onsen hotel",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "Are there any matsuli during this season",
+        "intent": "find_cultural",
+        "entities": []
+      },
+      {
+        "text": "any kids events during this season",
+        "intent": "find_cultural",
+        "entities": []
+      },
+      {
+        "text": "Find something relaxing spot at Kushu",
+        "intent": "find_relaxing",
+        "entities": [
+          {
+            "start": 32,
+            "end": 37,
+            "value": "Kushu",
+            "entity": "GPE"
+          }
+        ]
+      },
+      {
+        "text": "I want to sleep more",
+        "intent": "find_relaxing",
+        "entities": []
+      },
+      {
+        "text": "Find something at Yakushima",
+        "intent": "set_location",
+        "entities": [
+          {
+            "start": 18,
+            "end": 27,
+            "value": "Yakushima",
+            "entity": "GPE"
+          }
+        ]
       }
     ]
   }
