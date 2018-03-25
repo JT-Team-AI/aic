@@ -105,7 +105,7 @@ const App = ({ intent, entity, semantic, results }) => (
         </div>
         <div className="app-semantic panel col-md-4">
           <div className="panel-heading">
-            <h3 className="panel-title">Semantics</h3>
+            <h3 className="panel-title">Search criteria</h3>
           </div>
           <div className="panel-body">
            { semantic.filter &&

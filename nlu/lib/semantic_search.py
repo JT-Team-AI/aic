@@ -1,4 +1,3 @@
-import pdb
 import re
 import copy
 
@@ -14,6 +13,7 @@ def find_numbers(string, ints=True):
 LOCATION = {
   'Shinjuku': { 'lat': 35.7015, 'lng': 139.6741 },
   'Osaka': { 'lat': 34.6937, 'lng': 135.5022 },
+  'Kyoto': { 'lat': 35.0060, 'lng': 135.6909 },
   'Tokyo Tower': { 'lat': 35.6586, 'lng': 139.7454 },
   'Sky Tree': { 'lat': 35.7101, 'lng': 139.8107 }
 }
@@ -94,7 +94,6 @@ class SemanticSearch(object):
             return self.current_criteria
 
         if intent_class=="clear_search":
-          pdb.set_trace()
           self.current_criteria = copy.deepcopy(self.default_criteria)
           return self.current_criteria
 
@@ -116,7 +115,7 @@ class SemanticSearch(object):
             if loc:
                 search_criteria['filter']['location'] = loc
             else:
-                search_criteria['filter']['words'] = [facility['name'] or location['name']]
+                search_criteria['filter']['words'] = [(facility and facility['name']) or (location and location['name'])]
 
             if cardinal:
                 search_criteria['filter']['distance'] = find_numbers(cardinal['name'])[0]
