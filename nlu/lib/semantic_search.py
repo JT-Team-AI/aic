@@ -10,6 +10,16 @@ def find_numbers(string, ints=True):
     else:
         return numbers
 
+LOCATION = {
+  'Shinjuku': { 'lat': 35.7015, 'lng': 139.6741 },
+  'Osaka': { 'lat': 34.6937, 'lng': 135.5022 },
+  'Tokyo Tower': { 'lat': 35.6586, 'lng': 139.7454 },
+  'Sky Tree': { 'lat': 35.7101, 'lng': 139.8107 }
+}
+
+def find_location(name):
+  return LOCATION[name]
+
 class SemanticSearch(object):
     
     # TODO: receive new set of search criteria from browser on every call of update_search_criteria instead of using stored value
@@ -66,22 +76,45 @@ class SemanticSearch(object):
         language = nlu_data['language']
         intent = nlu_data['intent']
         entities = nlu_data['entities']
-        
+
         search_criteria = self.current_criteria
-        
+
         intent_class = intent['top_intent']
         intent_score = intent['score']
 
-        if len(entities)>0 and entities[0]['type']=='MONEY':
+        if intent_score < 0.4:
+            return self.current_criteria
 
-            if intent_class=="set_maximum_price":
-                search_criteria['filter']['budget_less'] = find_numbers(entities[0]['name'])[0]
+        if intent_class=="clear_search":
+          self.current_criteria = self.default_criteria
+          return self.current_criteria
 
-            elif intent_class=="set_minimum_price":
-                search_criteria['filter']['budget_more'] = find_numbers(entities[0]['name'])[0]
+        money = next(x for x in entities if x['type']=='MONEY')
+        cardinal = next(x for x in entities if x['type']=='CARDINAL')
+        facility = next(x for x in entities if x['type']=='FAC')
+        location = next(x for x in entities if x['type']=='GPE')
 
-        # Modify search_criteria based
-        # ...
+        if intent_class=="set_maximum_price" and money:
+            search_criteria['filter']['budget_less'] = find_numbers(money['name'])[0]
+
+        elif intent_class=="set_minimum_price" and money:
+            search_criteria['filter']['budget_more'] = find_numbers(money['name'])[0]
+
+        if intent_class=="set_location" and location:
+            loc = find_location(location['name'])
+            if loc:
+                search_criteria['filter']['location'] = loc
+            else:
+              search_criteria['filter']['words'] = [location['name']]
+
+        if intent_class=="find_creative":
+            search_criteria['filter']['tags'] = ['Art Galleries', 'Handmade']
+
+        if intent_class=="find_relaxing":
+            search_criteria['filter']['tags'] = ['Hot springs / Spa', 'Esthetic']
+
+        if intent_class=="find_cultural":
+            search_criteria['filter']['tags'] = ['Gourmet', 'Town', 'Tradition']
 
         self.current_criteria = search_criteria
         return search_criteria
