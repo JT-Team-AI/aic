@@ -112,6 +112,9 @@ body {
   padding: 3em 0;
 }
 
+.app-searchanalyze .panel-body {
+  text-align: left;
+}
 .app-results-row .thumbnail {
   overflow: hidden;
 }
@@ -134,4 +137,22 @@ body {
 
 .app-results-row .app-results-row-price {
   text-align: right;
+}
+
+.app-results-row .app-intent-score {
+  font-size: 2rem;
+}
+.high-rate {
+  color: red;
+}
+.middle-rate {
+  color: #8B4513;
+}
+.low-rate {
+  color: #444;
+}
+
+.recording {
+  background: yellow;
+  border-radius: 50%;
 }

@@ -14,10 +14,21 @@ const mapState = (state) => ({
   results: state.search.results,
 })
 
+const INTENT_MAP = {
+  set_maximum_price: 'Set maximum price',
+  set_minimum_price: 'Set minimum price',
+  set_location: 'Set location',
+  clear_search: 'Clear search context',
+  find_creative: 'Find something creative activity',
+  find_relaxing: 'Find something relaxing activity',
+  find_cultural: 'Find something cultural activity',
+  change_language: 'Change language',
+};
+
 const ENTITY_MAP = {
   PERSON        :'Person',
   NORP          :'Nationalities/Groups',
-  FACILITY      :'Facility',
+  FAC           :'Facility',
   ORG           :'Organization',
   GPE           :'Country/City/State',
   LOC           :'Location',
@@ -35,8 +46,17 @@ const ENTITY_MAP = {
   CARDINAL      :'Numerals',
 };
 
+const detectProbablilityClass = (v) => {
+  if (v > 0.65) {
+    return 'high-rate';
+  } else if (v >= 0.5) {
+    return 'middle-rate';
+  } else {
+    return 'low-rate';
+  }
+};
 
-const App = ({ intent, entity, results }) => (
+const App = ({ intent, entity, semantic, results }) => (
   <div className="app">
     <ul className="nav nav-tabs">
       <li role="presentation" className="active"><a href="/">Search</a></li>
@@ -47,25 +67,63 @@ const App = ({ intent, entity, results }) => (
     </div>
     <div className="container">
       <div className="app-searchanalyze">
-        <div className="app-intent panel col-md-6">
+        <div className="app-intent panel col-md-4">
           <div className="panel-heading">
-            <h3 className="panel-title">Top intent</h3>
+            <h3 className="panel-title">You want to</h3>
           </div>
           <div className="panel-body">
-            <div className="app-intent-label">{intent.top_intent}</div>
-            <div className="app-intent-score">{intent.score}</div>
+            <h4 className="app-intent-label">{INTENT_MAP[intent.top_intent]}</h4>
+            { intent.score &&
+              <div className="app-intent-score">probability: <span className={detectProbablilityClass(intent.score)}>{intent.score}</span></div>
+            }
           </div>
         </div>
-        <div className="app-entity panel col-md-6">
+        <div className="app-entity panel col-md-4">
           <div className="panel-heading">
             <h3 className="panel-title">Entities</h3>
           </div>
           <div className="panel-body">
-            {
-              entity.map(ent => (<div key={ent.name}>
-                <div className="app-entity-label">{ENTITY_MAP[ent.type]}</div>
-                <div className="app-entity-score">{ent.name}</div>
-              </div>))
+            { entity.length > 0 &&
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">key</th>
+                    <th scope="col">value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    entity.map(ent => (<tr key={ent.name}>
+                      <td className="app-entity-label">{ENTITY_MAP[ent.type]}</td>
+                      <td className="app-entity-score">{ent.name}</td>
+                    </tr>))
+                  }
+                </tbody>
+              </table>
+            }
+          </div>
+        </div>
+        <div className="app-semantic panel col-md-4">
+          <div className="panel-heading">
+            <h3 className="panel-title">Semantics</h3>
+          </div>
+          <div className="panel-body">
+           { semantic.filter &&
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">key</th>
+                    <th scope="col">value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {semantic.filter.budget_less && <tr><td>Budget less than</td><td>{semantic.filter.budget_less} yen</td></tr>}
+                  {semantic.filter.budget_less && <tr><td>Budget greater than</td><td>{semantic.filter.budget_more} yen</td></tr>}
+                  {semantic.filter.distance && <tr><td></td><td>Around {semantic.filter.distance}m from {semantic.filter.location.lat}° N, {semantic.filter.location.lng}° E</td></tr>}
+                  {semantic.filter.distance && <tr><td></td><td>Around {semantic.filter.distance}m from {semantic.filter.location.lat}° N, {semantic.filter.location.lng}° E</td></tr>}
+                  {semantic.filter.langs && <tr><td></td><td>{semantic.filter.langs}</td></tr>}
+                </tbody>
+              </table>
             }
           </div>
         </div>

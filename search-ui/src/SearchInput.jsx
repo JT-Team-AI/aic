@@ -14,16 +14,20 @@ class SearchInput extends React.Component {
   
       recognition.lang = "en-US";
       recognition.start();
-  
+      const img = document.querySelector('#recording_img');
+      img.classList.add('recording');
+
       recognition.onresult = (e) => {
         const result = e.results[0][0].transcript;
         document.getElementById('sentence').value = result;
         recognition.stop();
         onChange(result);
+        img.classList.remove('recording');
       };
   
       recognition.onerror = (e) => {
         recognition.stop();
+        img.classList.remove('recording');
       }
     }
   }
@@ -56,7 +60,7 @@ class SearchInput extends React.Component {
           this.textInput = node;
         }}
       />
-      <div><img onClick={() => this.startDictation(onChange)} src="//i.imgur.com/cHidSVu.gif" /></div>
+      <div><img id="recording_img" onClick={() => this.startDictation(onChange)} src="//i.imgur.com/cHidSVu.gif" /></div>
     </div>);
   }
 }
