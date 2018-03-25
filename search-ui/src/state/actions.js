@@ -88,7 +88,7 @@ const makeSearchUrl = semantic => {
       + `${filter.budget_more ? `&filter[budget_more]=${filter.budget_more}` : ''}`
       + `${filter.budget_less ? `&filter[budget_less]=${filter.budget_less}` : ''}`
       + `${filter.distance ? `&filter[distance]=${filter.distance}` : ''}`
-      + `&page[offset]=${semantic.page.offset || 0}&page[limit]=${semantic.page.limit || 5}&sort=${semantic.sort || 'recommended'}&currency=${semantic.currency || 'JPY'}&locale=${semantic.locale || 'en'}&langs=${(semantic.langs && semantic.langs.join(',')) || 'en'}`;
+      + `&page[offset]=${semantic.page.offset || 0}&page[limit]=${semantic.page.limit || 5}&sort=${semantic.sort || 'recommended'}&currency=${semantic.currency || 'JPY'}&locale=${semantic.locale || 'en'}&langs=${(semantic.langs && semantic.langs.join(',')) || 'en'}&fields[contents]=title,description,latitude,longitude,price`;
 };
 
 export const searchEpic = action$ =>

@@ -74,8 +74,17 @@ const App = ({ intent, entity, results }) => (
     <div className="container">
       <ul className="app-results list-group">{
         results.map(r => <li className="app-results-row list-group-item" key={r.id}>
-          <div className="app-results-row-title">{r.attributes.title}</div>
-          <div className="app-results-row-description">{r.attributes.description}</div>
+          <div className="media">
+            <div className="media-left">
+              <img className="media-object" src={`https://d3fbf9i27pqcx4.cloudfront.net/global/cropped/160/${r.id}-0.jpeg`} />
+            </div>
+            <div className="media-body">
+              <h4 className="app-results-row-title media-heading">{r.attributes.title}</h4>
+              <h4 className="app-results-row-price">{r.attributes.price} yen</h4>
+              <p>{r.attributes.latitude} {r.attributes.longitude}</p>
+              <div>{r.attributes.description}</div>
+            </div>
+          </div>
         </li>)
       }</ul>
     </div>
