@@ -90,13 +90,14 @@ def semantic_search():
             {'error': str(e), 'trace': traceback.format_exc()}
             )
 
-#@app.route('/data/train', methods=['POST'])
-#def train():
-#    intent_classifier = IntentClassifier(tokenizer=tokenizer)
-#    intent_classifier.load_data(path=args.data_path)
-#    intent_classifier.train(max_iter=args.iterations)
-#    intent_classifier.save_model(path=args.model_path)
-
+@app.route('/data/train', methods=['POST'])
+def train():
+    json_ = request.get_json()
+    en_intent_model = IntentClassifier(tokenizer=None)
+    en_intent_model.load_data(path=json_['path'])
+    en_intent_model.train(max_iter=200)
+    en_intent_model.save_model(path='models/demo_intent_model.pkl')
+    return jsonify({ 'result': True })
 
 try:
     port = int(sys.argv[1])

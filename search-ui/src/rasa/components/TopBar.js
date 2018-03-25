@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Button, Icon } from 'antd'
 import { connect } from 'react-redux'
 import * as actions from '../state/actions'
+import { train } from '../../state/actions'
 import isOnline from '../utils/isOnline'
 import ClearButton from './ClearButton'
 import FileReaderInput from 'react-file-reader-input'
@@ -19,6 +20,9 @@ const mapState = (state) => ({
 const mapActions = dispatch => ({
   save: (examples) => {
     dispatch(actions.save(examples))
+  },
+  train: (path) => {
+    dispatch(train(path))
   },
   openAddModal: () => {
     dispatch(actions.openAddModal())
@@ -51,7 +55,7 @@ class TopBar extends Component {
     this.props.fetchData(file.name, data)
   }
   render() {
-    const { filename, isUnsaved, save, openAddModal } = this.props
+    const { filename, isUnsaved, save, train, openAddModal } = this.props
 
     const fileButtons = isOnline
       ? (
@@ -80,14 +84,22 @@ class TopBar extends Component {
           </Button>
         </div>
       )
-      : (
-        <Button
-          style={ styles.button }
-          type={isUnsaved ? 'primary' : 'default'}
-          onClick={() => save(generateExport())}
-        >
-          Save
-        </Button>
+      : (<div>
+          <Button
+            style={ styles.button }
+            type={isUnsaved ? 'primary' : 'default'}
+            onClick={() => save(generateExport())}
+          >
+            Save
+          </Button>
+          <Button
+            style={ styles.button }
+            type={isUnsaved ? 'default' : 'primary'}
+            onClick={() => train(filename)}
+          >
+            Train
+          </Button>
+        </div>
       )
 
     return (

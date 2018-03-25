@@ -120,8 +120,8 @@ const App = ({ intent, entity, semantic, results }) => (
                   {semantic.filter.budget_less && <tr><td>Budget less than</td><td>{semantic.filter.budget_less} yen</td></tr>}
                   {semantic.filter.budget_more && <tr><td>Budget greater than</td><td>{semantic.filter.budget_more} yen</td></tr>}
                   {semantic.filter.distance && <tr><td>Location</td><td>Around {semantic.filter.distance}m from {semantic.filter.location.lat}° N, {semantic.filter.location.lng}° E</td></tr>}
-                  {semantic.filter.tags && <tr><td>Theme</td><td>{semantic.filter.tags}</td></tr>}
-                  {semantic.filter.words && <tr><td>Keyword</td><td>{semantic.filter.words}</td></tr>}
+                  {semantic.filter.tags && semantic.filter.tags.length > 0 && <tr><td>Theme</td><td>{semantic.filter.tags}</td></tr>}
+                  {semantic.filter.words && semantic.filter.words.length > 0 && <tr><td>Keyword</td><td>{semantic.filter.words}</td></tr>}
                   {semantic.langs && <tr><td>Language</td><td>{semantic.langs[0]}</td></tr>}
                 </tbody>
               </table>

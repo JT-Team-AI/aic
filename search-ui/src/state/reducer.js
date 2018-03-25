@@ -6,6 +6,8 @@ import {
   RECEIVED_ENTITY_RESULT,
   RECEIVED_SEMANTIC_RESULT,
   RECEIVED_SEARCH_RESULT,
+  TRAIN,
+  RECEIVED_TRAIN_RESULT,
 } from './actions'
 
 export default function reducer (state: Object = {}, action: Object): Object {
@@ -41,6 +43,17 @@ export default function reducer (state: Object = {}, action: Object): Object {
       return {
         ...state,
         results: action.results,
+      };
+    case TRAIN:
+      return {
+        ...state,
+        isTraining: true,
+      };
+    case RECEIVED_TRAIN_RESULT:
+      alert('Training done');
+      return {
+        ...state,
+        isTraining: false,
       };
     default:
       return state

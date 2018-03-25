@@ -681,6 +681,16 @@
             "entity": "GPE"
           }
         ]
+      },
+      {
+        "text": "Could you show me around Hokkaido?",
+        "intent": "set_location",
+        "entities": []
+      },
+      {
+        "text": "find places near Shinjuku",
+        "intent": "set_location",
+        "entities": []
       }
     ]
   }

@@ -8,10 +8,12 @@ export const SEARCH = 'SEARCH'
 export const INTENT = 'INTENT'
 export const ENTITY = 'ENTITY'
 export const SEMANTIC = 'SEMANTIC'
+export const TRAIN = 'TRAIN';
 export const RECEIVED_SEARCH_RESULT = 'RECEIVED_SEARCH_RESULT'
 export const RECEIVED_INTENT_RESULT = 'RECEIVED_INTENT_RESULT'
 export const RECEIVED_ENTITY_RESULT = 'RECEIVED_ENTITY_RESULT'
 export const RECEIVED_SEMANTIC_RESULT = 'RECEIVED_SEMANTIC_RESULT'
+export const RECEIVED_TRAIN_RESULT = 'RECEIVED_TRAIN_RESULT'
 
 export const search = (
   text: string,
@@ -39,6 +41,13 @@ export const semantic = (
 ): Object => ({
   type: SEMANTIC,
   text,
+});
+
+export const train = (
+  path: string,
+): Object => ({
+  type: TRAIN,
+  path,
 });
 
 export const intentEpic = action$ =>
@@ -97,4 +106,13 @@ export const searchEpic = action$ =>
     .switchMap(action => Observable.ajax.getJSON(makeSearchUrl(action.semantic)))
     .map(payload => ({ type: RECEIVED_SEARCH_RESULT, results: List(payload.data) }))
     .catch(ex => Observable.of({ type: ERROR, ex })
+    );
+
+export const trainEpic = action$ =>
+  action$.ofType(TRAIN)
+    .switchMap(action =>
+    Observable.ajax.post(`${API_PATH}/train`, { path: action.path, language: 'en' }, { 'Content-Type': 'application/json' })
+      .map(resp => ({ json: (typeof resp.xhr.response === 'string') ? JSON.parse(resp.xhr.response) : resp.xhr.response, xhr: resp.xhr }))
+      .map(payload => ({ type: RECEIVED_TRAIN_RESULT }))
+      .catch(ex => Observable.of({ type: ERROR, ex })),
     );
